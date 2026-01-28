@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { ShoppingCart, Menu, X, Check, Trash2, LogOut, User } from 'lucide-react';
 
 // Production uchun backend URL'ni bu yerda o'zgartiring
-const API_BASE = 'http://localhost:5000'; // Development
-// const API_BASE = 'https://flowers-uz-backend.onrender.com'; // Production
+const API_BASE = 'https://flowers-backend-0e8s.onrender.com'; // Production
+// const API_BASE = 'http://localhost:5000'; // Development
 
 const FlowersUZ = () => {
   const [user, setUser] = useState(null);
@@ -440,261 +440,310 @@ const FlowersUZ = () => {
                 className="w-full bg-pink-600 text-white px-6 py-2 rounded-lg hover:bg-pink-700 transition flex items-center justify-center space-x-2"
               >
                 <ShoppingCart size={20} />
-                <span>Cart ({cart.reduce((sum, item) => sum + item.quantity, 0)})</span>
+                <span>Cart</span>
               </button>
               <button
                 onClick={handleLogout}
-                className="w-full text-red-600 hover:text-red-700 transition py-2 text-center border-t pt-3"
+                className="w-full text-red-600 hover:bg-red-50 px-6 py-2 rounded-lg transition flex items-center justify-center space-x-2"
               >
-                Chiqish
+                <LogOut size={20} />
+                <span>Chiqish</span>
               </button>
             </div>
           </div>
         )}
       </nav>
 
-      <header className="bg-gradient-to-br from-pink-50 to-purple-50 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="text-sm text-pink-600 font-semibold mb-4">Luxury blooms, neon vibes</div>
-          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-            Flowers reimagined. Shop the future.
-          </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Step into a world of glowing bouquets, premium petals, and next-level style. 
-            Discover the freshest flowers with a modern twist.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="#shop" className="bg-pink-600 text-white px-8 py-3 rounded-lg hover:bg-pink-700 transition font-semibold">
-              Shop now
-            </a>
-            <a href="#gallery" className="bg-white text-pink-600 border-2 border-pink-600 px-8 py-3 rounded-lg hover:bg-pink-50 transition font-semibold">
-              View gallery
+      <main>
+        {/* Hero Section */}
+        <div className="relative bg-gray-900 py-32 px-4 overflow-hidden">
+          <div className="absolute inset-0 opacity-40">
+            <img 
+              src="https://cdn.prod.website-files.com/image-generation-assets/f0887af2-c11b-41e4-b7a7-255b2ef7e6b8.avif" 
+              alt="Hero background" 
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="relative max-w-7xl mx-auto text-center">
+            <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-6 tracking-tight">
+              Luxury <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-500">Neon</span> Blooms
+            </h1>
+            <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
+              Experience the future of floral design. Hand-crafted arrangements with an electric glow.
+            </p>
+            <a 
+              href="#shop"
+              className="inline-block bg-gradient-to-r from-pink-600 to-purple-600 text-white px-10 py-4 rounded-full text-lg font-bold hover:from-pink-700 hover:to-purple-700 transition transform hover:scale-105 shadow-lg"
+            >
+              Shop Collection
             </a>
           </div>
         </div>
-      </header>
 
-      <section id="shop" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Gallery in full bloom</h2>
-            <p className="text-gray-600">Dive into our neon bouquet showcase</p>
+        {/* Products Grid */}
+        <div id="shop" className="max-w-7xl mx-auto px-4 py-24">
+          <div className="flex justify-between items-end mb-12">
+            <div>
+              <h2 className="text-3xl font-bold text-gray-900">Our Collection</h2>
+              <p className="text-gray-600 mt-2">Choose your perfect neon arrangement</p>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.map(product => (
-              <div key={product.id} className="group bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300">
-                <div className="relative overflow-hidden h-64">
+            {products.map((product) => (
+              <div key={product.id} className="group bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition duration-300">
+                <div className="relative h-80 overflow-hidden">
                   <img 
                     src={product.image} 
                     alt={product.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition duration-300"></div>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{product.name}</h3>
-                  <p className="text-gray-600 mb-4">{product.description}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-2xl font-bold text-pink-600">
-                      {(product.price / 1000).toFixed(0)}K so'm
-                    </span>
-                    <button 
-                      onClick={() => addToCart(product)}
-                      className="bg-pink-600 text-white px-6 py-2 rounded-lg hover:bg-pink-700 transition font-semibold"
-                    >
-                      Add to cart
-                    </button>
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="text-xl font-bold text-gray-900">{product.name}</h3>
+                    <span className="text-pink-600 font-bold">{product.price.toLocaleString()} UZS</span>
                   </div>
+                  <p className="text-gray-600 text-sm mb-6">{product.description}</p>
+                  <button 
+                    onClick={() => addToCart(product)}
+                    className="w-full bg-gray-900 text-white py-3 rounded-xl font-semibold hover:bg-pink-600 transition duration-300 flex items-center justify-center space-x-2"
+                  >
+                    <ShoppingCart size={18} />
+                    <span>Add to Cart</span>
+                  </button>
                 </div>
               </div>
             ))}
           </div>
         </div>
-      </section>
-
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Why our bouquets stand out</h2>
-            <p className="text-gray-600">Discover what makes our flowers pop</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { title: 'Handpicked, always fresh', desc: 'Every bouquet crafted with premium blooms, sourced daily for vibrant color.' },
-              { title: 'Neon-wrapped for wow factor', desc: 'Signature neon wraps and glowing accents turn every bouquet into a show-stopper.' },
-              { title: 'Fast delivery, all hours', desc: 'Speedy couriers deliver your flowers with care, day or night, citywide.' }
-            ].map((feature, i) => (
-              <div key={i} className="bg-white p-8 rounded-xl shadow-lg">
-                <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mb-4">
-                  <Check className="text-pink-600" size={24} />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{feature.title}</h3>
-                <p className="text-gray-600">{feature.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      </main>
 
       {/* Cart Sidebar */}
       {showCart && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-end" onClick={() => setShowCart(false)}>
-          <div className="bg-white w-full max-w-md h-full overflow-y-auto" onClick={(e) => e.stopPropagation()}>
-            <div className="p-6 border-b border-gray-200 flex justify-between items-center sticky top-0 bg-white">
-              <h2 className="text-2xl font-bold">Shopping Cart</h2>
-              <button onClick={() => setShowCart(false)}>
-                <X size={24} />
-              </button>
-            </div>
-
-            {cart.length === 0 ? (
-              <div className="p-6 text-center text-gray-500">
-                <ShoppingCart size={48} className="mx-auto mb-4 text-gray-300" />
-                <p>Savat bo'sh</p>
+        <div className="fixed inset-0 z-[100] overflow-hidden">
+          <div className="absolute inset-0 bg-black bg-opacity-50 transition-opacity" onClick={() => setShowCart(false)}></div>
+          <div className="absolute inset-y-0 right-0 max-w-full flex">
+            <div className="w-screen max-w-md bg-white shadow-2xl flex flex-col">
+              <div className="px-6 py-6 border-b border-gray-200 flex justify-between items-center">
+                <h2 className="text-2xl font-bold text-gray-900">Your Cart</h2>
+                <button onClick={() => setShowCart(false)} className="text-gray-400 hover:text-gray-500">
+                  <X size={24} />
+                </button>
               </div>
-            ) : (
-              <>
-                <div className="p-6 space-y-4">
-                  {cart.map(item => (
-                    <div key={item.id} className="flex gap-4 border-b border-gray-200 pb-4">
-                      <img src={item.image} alt={item.name} className="w-20 h-20 object-cover rounded-lg" />
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-gray-900">{item.name}</h3>
-                        <p className="text-pink-600 font-bold">{(item.price / 1000).toFixed(0)}K so'm</p>
-                        <div className="flex items-center gap-2 mt-2">
-                          <button 
-                            onClick={() => updateQuantity(item.id, -1)}
-                            className="bg-gray-200 px-3 py-1 rounded hover:bg-gray-300"
-                          >
-                            -
-                          </button>
-                          <span className="px-3">{item.quantity}</span>
-                          <button 
-                            onClick={() => updateQuantity(item.id, 1)}
-                            className="bg-gray-200 px-3 py-1 rounded hover:bg-gray-300"
-                          >
-                            +
-                          </button>
-                          <button 
-                            onClick={() => removeFromCart(item.id)}
-                            className="ml-auto text-red-600 hover:text-red-700"
-                          >
-                            <Trash2 size={20} />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
 
-                <div className="p-6 border-t border-gray-200 sticky bottom-0 bg-white">
-                  <div className="flex justify-between mb-4">
-                    <span className="text-lg font-semibold">Jami:</span>
-                    <span className="text-2xl font-bold text-pink-600">
-                      {(getTotalPrice() / 1000).toFixed(0)}K so'm
-                    </span>
+              <div className="flex-1 overflow-y-auto px-6 py-6">
+                {cart.length === 0 ? (
+                  <div className="text-center py-12">
+                    <ShoppingCart size={48} className="mx-auto text-gray-300 mb-4" />
+                    <p className="text-gray-500">Your cart is empty</p>
+                  </div>
+                ) : (
+                  <div className="space-y-6">
+                    {cart.map((item) => (
+                      <div key={item.id} className="flex items-center space-x-4">
+                        <img src={item.image} alt={item.name} className="w-20 h-20 object-cover rounded-lg" />
+                        <div className="flex-1">
+                          <h4 className="font-bold text-gray-900">{item.name}</h4>
+                          <p className="text-gray-500 text-sm">{item.price.toLocaleString()} UZS</p>
+                          <div className="flex items-center space-x-3 mt-2">
+                            <button onClick={() => updateQuantity(item.id, -1)} className="w-8 h-8 border border-gray-200 rounded-full flex items-center justify-center hover:bg-gray-50">-</button>
+                            <span className="font-semibold">{item.quantity}</span>
+                            <button onClick={() => updateQuantity(item.id, 1)} className="w-8 h-8 border border-gray-200 rounded-full flex items-center justify-center hover:bg-gray-50">+</button>
+                          </div>
+                        </div>
+                        <button onClick={() => removeFromCart(item.id)} className="text-gray-400 hover:text-red-500">
+                          <Trash2 size={20} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {cart.length > 0 && (
+                <div className="px-6 py-8 border-t border-gray-200 bg-gray-50">
+                  <div className="flex justify-between text-xl font-bold text-gray-900 mb-6">
+                    <span>Total</span>
+                    <span>{getTotalPrice().toLocaleString()} UZS</span>
                   </div>
                   <button 
-                    onClick={() => { setShowCheckout(true); setShowCart(false); }}
-                    className="w-full bg-pink-600 text-white py-3 rounded-lg hover:bg-pink-700 transition font-semibold"
+                    onClick={() => { setShowCart(false); setShowCheckout(true); }}
+                    className="w-full bg-pink-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-pink-700 transition shadow-lg"
                   >
-                    To'lovga o'tish
+                    Checkout
                   </button>
                 </div>
-              </>
-            )}
+              )}
+            </div>
           </div>
         </div>
       )}
 
       {/* Checkout Modal */}
       {showCheckout && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6 border-b border-gray-200 flex justify-between items-center sticky top-0 bg-white">
-              <h2 className="text-2xl font-bold">To'lov ma'lumotlari</h2>
-              <button onClick={() => setShowCheckout(false)}>
+        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black bg-opacity-50" onClick={() => setShowCheckout(false)}></div>
+          <div className="relative bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-8">
+            <div className="flex justify-between items-center mb-8">
+              <h2 className="text-3xl font-bold text-gray-900">Checkout</h2>
+              <button onClick={() => setShowCheckout(false)} className="text-gray-400 hover:text-gray-500">
                 <X size={24} />
               </button>
             </div>
 
-            <div className="p-6 space-y-4">
-              <input type="text" value={orderData.name} onChange={(e) => setOrderData({...orderData, name: e.target.value})} className="w-full border rounded-lg px-4 py-2" placeholder="Ismingiz" />
-              <input type="tel" value={orderData.phone} onChange={(e) => setOrderData({...orderData, phone: e.target.value})} className="w-full border rounded-lg px-4 py-2" placeholder="+998 90 123 45 67" />
-              <textarea value={orderData.address} onChange={(e) => setOrderData({...orderData, address: e.target.value})} className="w-full border rounded-lg px-4 py-2" placeholder="Manzil" rows="2" />
-              <div className="border-t pt-4">
-                <h3 className="font-semibold mb-3">Karta ma'lumotlari</h3>
-                <input type="text" value={orderData.cardNumber} onChange={(e) => setOrderData({...orderData, cardNumber: e.target.value.replace(/\s/g,'').replace(/(\d{4})/g,'$1 ').trim()})} className="w-full border rounded-lg px-4 py-2 mb-3" placeholder="1234 5678 9012 3456" maxLength="19" />
-                <div className="grid grid-cols-2 gap-3">
-                  <input type="text" value={orderData.cardExpiry} onChange={(e) => {let v=e.target.value.replace(/\D/g,''); if(v.length>=2) v=v.slice(0,2)+'/'+v.slice(2,4); setOrderData({...orderData,cardExpiry:v})}} className="w-full border rounded-lg px-4 py-2" placeholder="MM/YY" maxLength="5" />
-                  <input type="text" value={orderData.cardCVV} onChange={(e) => setOrderData({...orderData,cardCVV:e.target.value.replace(/\D/g,'')})} className="w-full border rounded-lg px-4 py-2" placeholder="CVV" maxLength="3" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="space-y-4">
+                <h3 className="text-lg font-bold text-gray-900 mb-4">Delivery Information</h3>
+                <div>
+                  <label className="block text-sm font-semibold mb-2">Full Name</label>
+                  <input 
+                    type="text"
+                    value={orderData.name}
+                    onChange={(e) => setOrderData({...orderData, name: e.target.value})}
+                    className="w-full border-2 border-gray-100 rounded-lg px-4 py-3 focus:ring-2 focus:ring-pink-600 focus:border-transparent"
+                    placeholder="John Doe"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2">Phone Number</label>
+                  <input 
+                    type="tel"
+                    value={orderData.phone}
+                    onChange={(e) => setOrderData({...orderData, phone: e.target.value})}
+                    className="w-full border-2 border-gray-100 rounded-lg px-4 py-3 focus:ring-2 focus:ring-pink-600 focus:border-transparent"
+                    placeholder="+998 90 123 45 67"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2">Delivery Address</label>
+                  <textarea 
+                    value={orderData.address}
+                    onChange={(e) => setOrderData({...orderData, address: e.target.value})}
+                    className="w-full border-2 border-gray-100 rounded-lg px-4 py-3 focus:ring-2 focus:ring-pink-600 focus:border-transparent"
+                    rows="3"
+                    placeholder="Tashkent, Chilanzar district..."
+                  ></textarea>
                 </div>
               </div>
-              <div className="border-t pt-4">
-                <div className="flex justify-between mb-4">
-                  <span className="font-semibold">Jami:</span>
-                  <span className="text-2xl font-bold text-pink-600">{(getTotalPrice()/1000).toFixed(0)}K so'm</span>
+
+              <div className="space-y-4">
+                <h3 className="text-lg font-bold text-gray-900 mb-4">Payment Details</h3>
+                <div className="bg-gray-900 rounded-xl p-6 text-white mb-6">
+                  <div className="flex justify-between items-start mb-8">
+                    <div className="w-12 h-8 bg-yellow-500 rounded-md opacity-80"></div>
+                    <div className="text-xl font-bold italic">VISA</div>
+                  </div>
+                  <div className="text-xl tracking-widest mb-4">
+                    {orderData.cardNumber || '•••• •••• •••• ••••'}
+                  </div>
+                  <div className="flex justify-between text-sm opacity-70">
+                    <span>CARD HOLDER</span>
+                    <span>EXPIRES</span>
+                  </div>
+                  <div className="flex justify-between font-bold">
+                    <span>{orderData.name.toUpperCase() || 'YOUR NAME'}</span>
+                    <span>{orderData.cardExpiry || 'MM/YY'}</span>
+                  </div>
                 </div>
-                <button onClick={processPayment} disabled={loading} className="w-full bg-gradient-to-r from-pink-600 to-purple-600 text-white py-3 rounded-lg hover:from-pink-700 hover:to-purple-700 transition font-semibold disabled:opacity-50">
-                  {loading ? 'Kuting...' : 'To\'lovni amalga oshirish'}
-                </button>
+
+                <div>
+                  <label className="block text-sm font-semibold mb-2">Card Number</label>
+                  <input 
+                    type="text"
+                    value={orderData.cardNumber}
+                    onChange={(e) => setOrderData({...orderData, cardNumber: e.target.value})}
+                    className="w-full border-2 border-gray-100 rounded-lg px-4 py-3 focus:ring-2 focus:ring-pink-600 focus:border-transparent"
+                    placeholder="0000 0000 0000 0000"
+                    maxLength="19"
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold mb-2">Expiry Date</label>
+                    <input 
+                      type="text"
+                      value={orderData.cardExpiry}
+                      onChange={(e) => setOrderData({...orderData, cardExpiry: e.target.value})}
+                      className="w-full border-2 border-gray-100 rounded-lg px-4 py-3 focus:ring-2 focus:ring-pink-600 focus:border-transparent"
+                      placeholder="MM/YY"
+                      maxLength="5"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold mb-2">CVV</label>
+                    <input 
+                      type="password"
+                      value={orderData.cardCVV}
+                      onChange={(e) => setOrderData({...orderData, cardCVV: e.target.value})}
+                      className="w-full border-2 border-gray-100 rounded-lg px-4 py-3 focus:ring-2 focus:ring-pink-600 focus:border-transparent"
+                      placeholder="•••"
+                      maxLength="3"
+                    />
+                  </div>
+                </div>
               </div>
+            </div>
+
+            <div className="mt-12 pt-8 border-t border-gray-100">
+              <div className="flex justify-between text-2xl font-bold text-gray-900 mb-8">
+                <span>Total Amount</span>
+                <span>{getTotalPrice().toLocaleString()} UZS</span>
+              </div>
+              <button 
+                onClick={processPayment}
+                disabled={loading}
+                className="w-full bg-gradient-to-r from-pink-600 to-purple-600 text-white py-5 rounded-2xl font-bold text-xl hover:from-pink-700 hover:to-purple-700 transition shadow-xl transform hover:scale-[1.02] disabled:opacity-50"
+              >
+                {loading ? 'Processing...' : 'Pay Now'}
+              </button>
             </div>
           </div>
         </div>
       )}
 
+      {/* Success Notification */}
       {paymentSuccess && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl p-8 max-w-md text-center">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Check className="text-green-600" size={32} />
-            </div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">To'lov muvaffaqiyatli!</h2>
-            <p className="text-gray-600 mb-4">Buyurtmangiz qabul qilindi. Tez orada siz bilan bog'lanamiz.</p>
-          </div>
+        <div className="fixed top-24 left-1/2 transform -translate-x-1/2 z-[200] bg-green-600 text-white px-8 py-4 rounded-full shadow-2xl flex items-center space-x-3 animate-bounce">
+          <Check size={24} />
+          <span className="font-bold text-lg">Order placed successfully!</span>
         </div>
       )}
 
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-br from-pink-500 to-purple-600 rounded-lg flex items-center justify-center">
-                  <div className="text-white text-xl font-bold">F</div>
-                </div>
-                <span className="text-xl font-bold">flowers_uz</span>
+      <footer className="bg-gray-900 text-white py-16 px-4">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+          <div className="col-span-1 md:col-span-2">
+            <div className="flex items-center space-x-3 mb-6">
+              <div className="w-10 h-10 bg-gradient-to-br from-pink-500 to-purple-600 rounded-lg flex items-center justify-center">
+                <div className="text-white text-xl font-bold">F</div>
               </div>
-              <p className="text-gray-400">Luxury blooms with neon vibes</p>
+              <span className="text-2xl font-bold">flowers_uz</span>
             </div>
-            <div>
-              <h3 className="font-semibold mb-4">Shop</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-pink-400 transition">Bouquets</a></li>
-                <li><a href="#" className="hover:text-pink-400 transition">Gifts</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Support</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-pink-400 transition">FAQ</a></li>
-                <li><a href="#" className="hover:text-pink-400 transition">Shipping</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Contact</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li>+998 90 123 45 67</li>
-                <li>info@flowers-uz.com</li>
-              </ul>
-            </div>
+            <p className="text-gray-400 max-w-md">
+              The premier destination for luxury neon floral arrangements in Uzbekistan. Bringing light and life to your special moments.
+            </p>
           </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>© 2025 flowers_uz. All rights reserved.</p>
+          <div>
+            <h4 className="text-lg font-bold mb-6">Quick Links</h4>
+            <ul className="space-y-4 text-gray-400">
+              <li><a href="#shop" className="hover:text-pink-500 transition">Shop</a></li>
+              <li><a href="#about" className="hover:text-pink-500 transition">About Us</a></li>
+              <li><a href="#gallery" className="hover:text-pink-500 transition">Gallery</a></li>
+              <li><a href="#contact" className="hover:text-pink-500 transition">Contact</a></li>
+            </ul>
           </div>
+          <div>
+            <h4 className="text-lg font-bold mb-6">Contact Us</h4>
+            <ul className="space-y-4 text-gray-400">
+              <li>Tashkent, Uzbekistan</li>
+              <li>+998 90 123 45 67</li>
+              <li>info@flowers-uz.com</li>
+            </ul>
+          </div>
+        </div>
+        <div className="max-w-7xl mx-auto border-t border-gray-800 mt-16 pt-8 text-center text-gray-500 text-sm">
+          © 2024 flowers_uz. All rights reserved.
         </div>
       </footer>
     </div>
